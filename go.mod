@@ -1,3 +1,3 @@
 module github.com/eyotang/container
 
-go 1.16
+go 1.18
