@@ -1,12 +1,10 @@
-package queue
+package lock_free_queue
 
 import (
 	"runtime"
 	"sort"
 	"sync"
 	"testing"
-
-	. "github.com/smartystreets/goconvey/convey"
 )
 
 const (
@@ -65,32 +63,6 @@ func TestQueue(t *testing.T) {
 			}
 		}
 	}
-}
-
-func TestQueue_Index(t *testing.T) {
-	Convey("test Queue Index", t, func() {
-		Convey("test Queue Index head < tail", func() {
-			q := NewQueue[int]()
-			for i := 0; i < minQueueLen; i++ {
-				q.Push(i)
-			}
-			idx := q.Index(minQueueLen - 1)
-			So(idx, ShouldEqual, minQueueLen-1)
-		})
-
-		Convey("test Queue Index head > tail", func() {
-			q := NewQueue[int]()
-			for i := 0; i < minQueueLen; i++ {
-				q.Push(i)
-			}
-			for i := 0; i < 3; i++ {
-				q.Pop()
-			}
-			q.Push(100)
-			idx := q.Index(100)
-			So(idx, ShouldEqual, minQueueLen-3)
-		})
-	})
 }
 
 func push() {
