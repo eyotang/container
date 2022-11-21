@@ -124,6 +124,7 @@ func (q *Queue[T]) Pop() (T, bool) {
 	return ret, true
 }
 
+// Index get the index of value, starts from zero. Return -1, if not exist.
 func (q *Queue[T]) Index(val T) int {
 	q.lock.RLock()
 	if q.count <= 0 {
