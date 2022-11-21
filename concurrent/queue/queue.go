@@ -124,6 +124,22 @@ func (q *Queue[T]) Pop() (T, bool) {
 	return ret, true
 }
 
+func (q *Queue[T]) Items() (items []T) {
+	q.lock.RLock()
+	if q.count <= 0 {
+		q.lock.RUnlock()
+		return
+	}
+	if q.tail > q.head {
+		items = append(items, q.buf[q.head:q.tail]...)
+	} else {
+		items = append(items, q.buf[q.head:]...)
+		items = append(items, q.buf[0:q.tail]...)
+	}
+	q.lock.RUnlock()
+	return
+}
+
 // Index get the index of value, starts from zero. Return -1, if not exist.
 func (q *Queue[T]) Index(val T) int {
 	q.lock.RLock()
