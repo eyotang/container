@@ -144,6 +144,7 @@ func (q *Queue[T]) Items() (items []T) {
 func (q *Queue[T]) Index(val T) int {
 	q.lock.RLock()
 	if q.count <= 0 {
+		q.lock.RUnlock()
 		return -1
 	}
 	idx := 0
